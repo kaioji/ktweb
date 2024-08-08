@@ -1,4 +1,6 @@
 package com.example.demo.book.dao.repositroy
 
-interface BookRepository {
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface BookRepository : JpaRepository<BookEntity, Long> {
 }
