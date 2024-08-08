@@ -4,15 +4,18 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "book")
-data class Book(
+class BookEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id:Int? = null,
+    var id: Int? = null,
 
-    var title:String,
+    @Column(name = "title")
+    var title: String?=null,
 
-    var author:String,
+    @Column(name = "author")
+    var author: String?=null,
 
-    var name:String
+    @Column(name = "name")
+    var name: String?=null
 
 )
