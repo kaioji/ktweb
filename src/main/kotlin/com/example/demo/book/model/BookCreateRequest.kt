@@ -4,6 +4,5 @@ import java.io.Serializable
 
 data class BookCreateRequest(
     var title:String,
-    var author:String,
-    var name:String
+    var authorName:String,
 ): Serializable

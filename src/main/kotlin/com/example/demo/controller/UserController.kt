@@ -12,10 +12,10 @@ class UserController (
     private val userServiceImpl: UserServiceImpl
 ){
 
-    @GetMapping("/get/id/{id}")
-    fun getUser(@PathVariable id:Long):UserEntity{
-        return userServiceImpl.get(id)
-    }
+//    @GetMapping("/get/id/{id}")
+//    fun getUser(@PathVariable id:Long):UserEntity{
+//        return userServiceImpl.get(id)
+//    }
 
     @GetMapping("/get/username/{username}")
     fun getByUsername(@PathVariable username:String):UserEntity{
