@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("user")
-class UserController (
+class UserController(
     private val userServiceImpl: UserServiceImpl
-){
+) {
 
 //    @GetMapping("/get/id/{id}")
 //    fun getUser(@PathVariable id:Long):UserEntity{
@@ -18,18 +18,18 @@ class UserController (
 //    }
 
     @GetMapping("/get/username/{username}")
-    fun getByUsername(@PathVariable username:String):UserEntity{
+    fun getByUsername(@PathVariable username: String): UserEntity {
         println(username)
         return userServiceImpl.getByUsername(username)
     }
 
     @PostMapping("/save")
-    fun getUser(@RequestBody data:UserRequest):UserEntity{
+    fun getUser(@RequestBody data: UserRequest): UserEntity {
         return userServiceImpl.create(data)
     }
 
     @GetMapping("/all")
-    fun getAllUsers():List<UserEntity>{
+    fun getAllUsers(): List<UserEntity> {
         return userServiceImpl.findAll()
     }
 }
