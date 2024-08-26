@@ -25,14 +25,4 @@ class JobComponent {
         id++
         userRepository.saveAndFlush(user)
     }
-
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    fun updateBook(id:Int) {
-        val book = bookRepository.findByIdOrNull(id)
-        book?.let {
-            it.name += id.toString()
-            bookRepository.saveAndFlush(it)
-        }
-
-    }
 }
