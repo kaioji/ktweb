@@ -38,9 +38,9 @@ data class PointExchangeEntity(
     @Column(name = "operation_creator")
     var operationCreator: String,
 
-    @Column(name = "operation_type")
+    @Column(name = "exchange_points")
     var exchangePoints: Double,
 
-    @Column(name = "operation_type")
+    @Column(name = "operation_gift")
     var exchangeGift: String,
 )
