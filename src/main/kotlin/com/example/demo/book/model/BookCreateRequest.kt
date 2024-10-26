@@ -1,9 +1,14 @@
 package com.example.demo.book.model
 
 import java.io.Serializable
+import javax.validation.constraints.NotBlank
 
 data class BookCreateRequest(
-    var title:String,
-    var author:String,
-    var name:String
-): Serializable
+    @NotBlank
+    var title: String,
+
+    @NotBlank
+    var author: String,
+
+    var name: String
+) : Serializable
