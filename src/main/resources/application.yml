@@ -1,3 +1,12 @@
+springdoc:
+  api-docs:
+    resolve-schema-properties: true
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    tagsSorter: alpha
+    operationsSorter: alpha
+
 jasypt:
   encryptor:
     #加解密的密码
@@ -5,6 +14,13 @@ jasypt:
     #jasypt默认更改了算法，如果不指定那么会报错：failed to bind properties under 'spring.datasource.druid.password'
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
 
 spring:
   profiles:

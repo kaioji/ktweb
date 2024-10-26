@@ -14,7 +14,7 @@ data class VipCardEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    var id: Long? = null,
+    var id: Long,
 
     @CreatedDate
     @Column(name = "create_time")
@@ -25,10 +25,10 @@ data class VipCardEntity(
     var updateTime: LocalDateTime,
 
     //  冗余：相当于外建
-    @Column(name = "user_id")
-    var userId: Long,
+    @Column(name = "uin", nullable = false)
+    var uin: String,
 
-    @Column(name = "username")
+    @Column(name = "username", nullable = false)
     var username: String,
 
     @Column(name = "card_no")
@@ -86,6 +86,6 @@ data class VipCardEntity(
     @Column(name = "last_active_time")
     var lastActiveTime: LocalDateTime,
 
-)
+    )
 
 //data class不用初始值，普通class 需要初始值除非使用lateinit

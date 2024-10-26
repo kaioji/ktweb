@@ -1,3 +1,12 @@
+springdoc:
+  api-docs:
+    resolve-schema-properties: true
+    path: /v3/api-docs
+    enabled: true
+  swagger-ui:
+    tagsSorter: alpha
+    operationsSorter: alpha
+
 jasypt:
   encryptor:
     #加解密的密码
@@ -5,6 +14,13 @@ jasypt:
     #jasypt默认更改了算法，如果不指定那么会报错：failed to bind properties under 'spring.datasource.druid.password'
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
+
+
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
 
 spring:
   profiles:
@@ -26,3 +42,15 @@ spring:
         #指定jpa的自动表生成策略，驼峰自动映射为下划线格式7
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+# 划分，只能三个
+---
+spring:
+  profiles:
+    active: daily
+
+
+---
+spring:
+  profiles:
+    active: production, staging
