@@ -6,6 +6,8 @@ import com.example.demo.user.model.UserRequest
 import com.google.gson.Gson
 import jakarta.annotation.Resource
 import org.jasypt.encryption.StringEncryptor
+import org.jasypt.encryption.pbe.PBEStringEncryptor
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.jasypt.util.text.BasicTextEncryptor
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
@@ -53,10 +55,6 @@ class UserServiceImpl(
         return entity
     }
 
-    fun UserServiceImpl.toUser(): UserEntity? {
-        return null
-    }
-
     // 基础使用
     fun basicSalt(encryptString: String): String {
         println("配置密码为：$password")
@@ -71,5 +69,19 @@ class UserServiceImpl(
         println("username:$username")
         println("password:$password")
         return textEncryptor.encrypt(encryptString)
+    }
+
+    @Resource
+    private lateinit var stringEncryptor: StringEncryptor
+
+    @Resource
+    private lateinit var pbeStringEncryptor: PBEStringEncryptor
+
+    // 内置加密器使用
+    fun multiSalt(encryptString: String): Map<String, String> {
+        val map = hashMapOf<String, String>()
+        map["stringEncryptor"] = stringEncryptor.encrypt(encryptString)
+        map["pbeStringEncryptor"] = pbeStringEncryptor.encrypt(encryptString)
+        return map
     }
 }
