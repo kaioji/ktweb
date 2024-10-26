@@ -10,24 +10,17 @@ import java.awt.print.Book
 
 
 @Service
-class BookServiceImp{
+class BookServiceImp {
     @Resource(name = "namedParameterJdbcTemplate") //必须指定name
     private lateinit var jdbcTemplate: NamedParameterJdbcTemplate
 
-    fun get(id:Int):Map<String, Any>{
+    fun get(id: Int): Map<String, Any> {
         var querySQL = StringBuilder("select * from Book where id = $id")
         var parameters = MapSqlParameterSource()
         parameters.addValue("id", id)
 
-        val ret = jdbcTemplate.query(querySQL.toString(),parameters,ColumnMapRowMapper())
+        val ret = jdbcTemplate.query(querySQL.toString(), parameters, ColumnMapRowMapper())
+        return emptyMap()
     }
 
-    fun all():List<Book>{
-        var querySQL = "select * from Book"
-        var parameters = MapSqlParameterSource()
-
-        return jdbcTemplate.queryForList(querySQL,parameters,Book::class.java)
-
-
-    }
 }
