@@ -27,6 +27,11 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
+
+server:
+  port: 8080
+  servlet:
+    context-path: /ktweb
 # 划分，只能三个
 ---
 spring:
