@@ -1,6 +1,6 @@
 package com.example.demo.common.util
 
-import com.example.demo.common.annotion.UserAuthenticate
+import com.example.demo.common.annotation.UserAuthenticate
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 

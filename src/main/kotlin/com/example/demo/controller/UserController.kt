@@ -1,6 +1,8 @@
 package com.example.demo.controller
 
-import com.example.demo.common.annotion.UserAuthenticate
+import com.example.demo.common.annotation.Slf4j
+import com.example.demo.common.annotation.Slf4j.Companion.log
+import com.example.demo.common.annotation.UserAuthenticate
 import com.example.demo.user.dao.entity.UserEntity
 import com.example.demo.user.model.UserRequest
 import com.example.demo.user.service.UserServiceImpl
@@ -9,8 +11,9 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("user")
+@Slf4j
 class UserController(
-    private val userServiceImpl: UserServiceImpl
+    private val userServiceImpl: UserServiceImpl,
 ) {
 
     @GetMapping("/get/id/{id}")
@@ -36,7 +39,10 @@ class UserController(
 
     @GetMapping("/basicSalt")
     @UserAuthenticate(permission = true) // 不会作用
-    fun basicSalt(@RequestBody encryptString: String) = userServiceImpl.basicSalt(encryptString)
+    fun basicSalt(@RequestBody request: Map<String, String>): Any {
+        log.info("basicSalt encryptString:$request")
+        return userServiceImpl.basicSalt(request)
+    }
 
     @GetMapping("/multiSalt")
     @UserAuthenticate(permission = true)
