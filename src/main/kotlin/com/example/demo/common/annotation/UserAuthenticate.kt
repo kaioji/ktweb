@@ -1,4 +1,4 @@
-package com.example.demo.common.annotion
+package com.example.demo.common.annotation
 
 import java.lang.annotation.Inherited
 
