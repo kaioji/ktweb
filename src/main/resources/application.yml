@@ -1,3 +1,4 @@
+# jasypt配置
 jasypt:
   encryptor:
     #加解密的密码
@@ -6,9 +7,19 @@ jasypt:
     algorithm: PBEWithMD5AndDES
     iv-generator-classname: org.jasypt.iv.NoIvGenerator
 
+---
+# spring boot配置文件设置, 依据：org.springframework.boot.autoconfigure.web.ServerProperties
+server:
+  port: 8080
+  servlet:
+    context-path: /ktweb  # 项目访问路径，也可以称为项目路径，是构成url地址的一部分。默认为:/
+  error:
+    path: /error # 指定发生错误时，跳转的URL
+
 spring:
-  profiles:
-    active: dev
+  config:
+    activate:
+      on-profile: dev
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     #    &allowPublicKeyRetrieval=True,createDatabaseIfNotExist=true
@@ -27,14 +38,52 @@ spring:
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
         #physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
 
-# 划分，只能三个
+# 划分（只能三个）
 ---
 spring:
-  profiles:
-    active: daily
+  config:
+    activate:
+      on-profile: daily # ${SPRING_PROFILES_ACTIVE} 读取名为 SPRING_PROFILES_ACTIVE 的环境变量
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: ENC(WiPGHnigVRa8V0p+TtX2Pg==)
 
+  jpa:
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
 
+server:
+  port: 8081
+  servlet:
+    context-path: /ktweb
 ---
 spring:
-  profiles:
-    active: production, staging
+  config:
+    activate:
+      on-profile: production, staging
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: ENC(WiPGHnigVRa8V0p+TtX2Pg==)
+
+  jpa:
+    show-sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+
+server:
+  port: 8082
+  servlet:
+    context-path: /ktweb
