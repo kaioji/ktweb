@@ -4,6 +4,7 @@ import com.example.demo.user.dao.entity.UserEntity
 import com.example.demo.user.dao.repository.UserRepository
 import com.example.demo.user.model.UserRequest
 import com.google.gson.Gson
+import jakarta.annotation.PostConstruct
 import jakarta.annotation.Resource
 import org.jasypt.encryption.StringEncryptor
 import org.jasypt.encryption.pbe.PBEStringEncryptor
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service
 @Service
 class UserServiceImpl(
     private val userRepository: UserRepository,
+    private val userTestServiceImpl: UserTestServiceImpl,
     private val modelMapper: ModelMapper,
     private val gson: Gson,
 ) {
@@ -27,8 +29,14 @@ class UserServiceImpl(
     @Value("\${jasypt.encryptor.password}")
     private val password: String = ""
 
+    @PostConstruct
+    fun init() {
+        userTestServiceImpl.test()
+    }
+
     fun findAll(): List<UserEntity> {
         val list = userRepository.findAll()
+//        slf4j 日志存储在哪？
         logger.info("Retrieving all users: {}", gson.toJson(list))
         println(gson.toJson(list))
         return list
@@ -43,8 +51,6 @@ class UserServiceImpl(
     }
 
     fun create(request: UserRequest): UserEntity {
-//        var _entity = UserEntity(username = request.username,password = request.password,email = request.email,gender = request.gender)
-//        ClassObject::class.java???
         val entity = modelMapper.map(request, UserEntity::class.java)
         println(entity)
 
@@ -53,10 +59,8 @@ class UserServiceImpl(
     }
 
     // 基础使用
-    fun basicSalt(request: Map<String, String>): String {
+    fun basicSalt(encryptString: String): String {
         println("配置密码为：$password")
-        val encryptString = request["encryptString"] ?: throw Exception("encryptString is null")
-        println("encryptString：$encryptString")
         val textEncryptor = BasicTextEncryptor()
 
         //加密所需的salt(盐)
