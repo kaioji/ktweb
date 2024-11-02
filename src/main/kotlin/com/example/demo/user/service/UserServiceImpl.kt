@@ -7,7 +7,6 @@ import com.google.gson.Gson
 import jakarta.annotation.Resource
 import org.jasypt.encryption.StringEncryptor
 import org.jasypt.encryption.pbe.PBEStringEncryptor
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor
 import org.jasypt.util.text.BasicTextEncryptor
 import org.modelmapper.ModelMapper
 import org.slf4j.Logger
@@ -28,10 +27,8 @@ class UserServiceImpl(
     @Value("\${jasypt.encryptor.password}")
     private val password: String = ""
 
-
     fun findAll(): List<UserEntity> {
         val list = userRepository.findAll()
-//        slf4j 日志存储在哪？
         logger.info("Retrieving all users: {}", gson.toJson(list))
         println(gson.toJson(list))
         return list
@@ -56,8 +53,10 @@ class UserServiceImpl(
     }
 
     // 基础使用
-    fun basicSalt(encryptString: String): String {
+    fun basicSalt(request: Map<String, String>): String {
         println("配置密码为：$password")
+        val encryptString = request["encryptString"] ?: throw Exception("encryptString is null")
+        println("encryptString：$encryptString")
         val textEncryptor = BasicTextEncryptor()
 
         //加密所需的salt(盐)

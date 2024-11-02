@@ -1,5 +1,8 @@
 package com.example.demo.controller
 
+import com.example.demo.common.annotation.Slf4j
+import com.example.demo.common.annotation.Slf4j.Companion.log
+import com.example.demo.common.annotation.UserAuthenticate
 import com.example.demo.user.dao.entity.UserEntity
 import com.example.demo.user.model.UserRequest
 import com.example.demo.user.service.UserServiceImpl
@@ -8,8 +11,9 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("user")
+@Slf4j
 class UserController(
-    private val userServiceImpl: UserServiceImpl
+    private val userServiceImpl: UserServiceImpl,
 ) {
 
     @GetMapping("/get/id/{id}")
@@ -34,10 +38,16 @@ class UserController(
     }
 
     @GetMapping("/basicSalt")
-    fun basicSalt(@RequestBody encryptString: String) = userServiceImpl.basicSalt(encryptString)
+    @UserAuthenticate(permission = true) // 不会作用
+    fun basicSalt(@RequestBody request: Map<String, String>): Any {
+        log.info("basicSalt encryptString:$request")
+        return userServiceImpl.basicSalt(request)
+    }
 
     @GetMapping("/multiSalt")
+    @UserAuthenticate(permission = true)
     fun multiSalt(@RequestBody encryptString: String) = userServiceImpl.multiSalt(encryptString)
 }
 
 //PathVariable注解：获取url中的路径参数，路径参数可以有多个，PathVariable("参数名")与其对应
+// gson使用：https://juejin.cn/post/6844903765603336206#heading-9
